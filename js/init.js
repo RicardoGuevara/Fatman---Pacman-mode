@@ -5,8 +5,8 @@ mainState.prototype = {
     },
 
     create: function() {
-        game.state.add('SplashScreen',PacmanGame);
-        game.state.start('SplashScreen');
+        game.state.add('Menu',Menu);
+        game.state.start('Menu');
     },
 
 }

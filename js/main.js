@@ -10,6 +10,8 @@ var ofline_keys = {
     down:   false,
 };
 
+var online_cursors;
+
 var my_identifier = {
         clave:      clave_iden, //clave de sala
         server_id:  'waiting',       //id de la sesión (socket)
@@ -36,11 +38,11 @@ var gameProperties = {
 var game = new Phaser.Game(448, 496, Phaser.AUTO, "kill_me_pls");
 //var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'kill_me_pls');
 var mainState = function(game) {};
-var online = function(game) {};
+var Menu = function(game){};
+var online_game = function(game) {};
 var splashScreen = function(game){};
 var Init = function(game){};
 var PacmanGame;
-
 
 var SOUND_VOLUME = 0.1;
 

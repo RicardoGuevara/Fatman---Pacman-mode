@@ -105,6 +105,7 @@ Pacman.prototype.move = function(direction) {
   this.current = direction;
 };
 
+
 Pacman.prototype.update = function() {
   if (!this.isDead) {
     this.game.physics.arcade.collide(this.sprite, this.game.layer);

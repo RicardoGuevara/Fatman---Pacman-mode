@@ -1,4 +1,9 @@
-PacmanGame = function(game) {
+socket.on('game',(game_data)=>{
+    online_cursors = game_data;
+    
+});
+
+online_game = function(game) {
   this.map = null;
   this.layer = null;
 
@@ -71,7 +76,7 @@ PacmanGame = function(game) {
   this.game = game;
 };
 
-PacmanGame.prototype = {
+online_game.prototype = {
 
   init: function() {
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -109,6 +114,8 @@ PacmanGame.prototype = {
     this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
     this.pacman = new Pacman(this, "pacman");
+    this.pacman2 = new Pacman(this, "pacman");
+
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.cursors["d"] = this.input.keyboard.addKey(Phaser.Keyboard.D);
@@ -136,10 +143,13 @@ PacmanGame.prototype = {
     this.ghosts.push(this.clyde, this.pinky, this.inky, this.blinky);
 
     this.sendExitOrder(this.pinky);
+
   },
 
   checkKeys: function() {
+
     this.pacman.checkKeys(this.cursors);
+
 
     if (this.lastKeyPressed < this.time.time) {
       if (this.cursors.d.isDown) {
@@ -153,12 +163,36 @@ PacmanGame.prototype = {
     }
   },
 
+  checkonlinekeys: function() {
+    let key_order = {
+            cursors:this.cursors,
+            py:     my_identifier.server_id,
+            pj_numb:    my_identifier.server_id,
+        };
+
+    socket.emit('game',key_order); 
+
+
+    if (this.lastKeyPressed < this.time.time) {
+      if (this.cursors.d.isDown) {
+        this.DEBUG_ON = (this.DEBUG_ON) ? false : true;
+        this.lastKeyPressed = this.time.time + this.KEY_COOLING_DOWN_TIME;
+      }
+      if (this.cursors.b.isDown) {
+        this.ORIGINAL_OVERFLOW_ERROR_ON = this.ORIGINAL_OVERFLOW_ERROR_ON ? false : true;
+        this.pinky.ORIGINAL_OVERFLOW_ERROR_ON = this.ORIGINAL_OVERFLOW_ERROR_ON;
+      }
+    }
+
+    this.pacman2.checkKeys(online_cursors.cursors);
+    
+  },
+
   checkMouse: function() {
     if (this.input.mousePointer.isDown) {
       var x = this.game.math.snapToFloor(Math.floor(this.input.x), this.gridsize) / this.gridsize;
       var y = this.game.math.snapToFloor(Math.floor(this.input.y), this.gridsize) / this.gridsize;
       this.debugPosition = new Phaser.Point(x * this.gridsize, y * this.gridsize);
-      console.log(x, y);
     }
   },
 
@@ -170,6 +204,17 @@ PacmanGame.prototype = {
       this.score += 10;
     } else {
       this.killPacman();
+    }
+  },
+
+  dogEatsDog2: function(pacman, ghost) {
+    if (this.isPaused) {
+      this[ghost.name].mode = this[ghost.name].RETURNING_HOME;
+      this[ghost.name].ghostDestination = new Phaser.Point(14 * this.gridsize, 14 * this.gridsize);
+      this[ghost.name].resetSafeTiles();
+      this.score += 10;
+    } else {
+      this.killPacman2();
     }
   },
 
@@ -195,12 +240,28 @@ PacmanGame.prototype = {
     setTimeout(function () {
 
         alert("Haz fallado, fatman ha muerto de gordura :(");
-        //clave_iden = prompt('Nombre de la sala');        
+        clave_iden = prompt('Nombre de la sala');        
         socket.emit('identifier',clave_iden);
 
         
-        game.state.add('ofline',PacmanGame);
-        game.state.start('ofline');
+        game.state.add('on',online_game);
+        game.state.start('on');
+      
+      }, 1000);
+  },
+
+  killPacman2: function() {
+    this.pacman2.isDead = true;
+    //this.stopGhosts();
+    setTimeout(function () {
+
+        alert("Han fallado, tu amigo ha muerto de gordura :(");
+        clave_iden = prompt('Nombre de la sala');        
+        socket.emit('identifier',clave_iden);
+
+        
+        game.state.add('on',online_game);
+        game.state.start('on');
       
       }, 1000);
   },
@@ -218,6 +279,8 @@ PacmanGame.prototype = {
       for (var i = 0; i < this.ghosts.length; i++) {
         if (this.ghosts[i].mode !== this.ghosts[i].RETURNING_HOME) {
           this.physics.arcade.overlap(this.pacman.sprite, this.ghosts[i].ghost, this.dogEatsDog, null, this);
+
+          this.physics.arcade.overlap(this.pacman2.sprite, this.ghosts[i].ghost, this.dogEatsDog2, null, this);
         }
       }
 
@@ -252,9 +315,11 @@ PacmanGame.prototype = {
     }
 
     this.pacman.update();
+    this.pacman2.update();
     this.updateGhosts();
 
     this.checkKeys();
+    //this.checkonlinekeys();
     this.checkMouse();
   },
 
@@ -330,4 +395,4 @@ PacmanGame.prototype = {
   }
 };
 
-game.state.add('Game', PacmanGame);
+game.state.add('on', online_game);
