@@ -39,6 +39,7 @@ var mainState = function(game) {};
 var online = function(game) {};
 var splashScreen = function(game){};
 var Init = function(game){};
+var PacmanGame;
 
 
 var SOUND_VOLUME = 0.1;

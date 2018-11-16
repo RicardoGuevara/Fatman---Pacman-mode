@@ -27,7 +27,7 @@ splashScreen.prototype ={
 	},
 	gameStates:function(){
 		//game.state.add("menu",menu);
-	    game.state.add("online",online);
+	    game.state.add("ofline",PacmanGame);
 	    //game.state.add("gameOver",gameOver);
 	    
 	},
@@ -47,8 +47,8 @@ splashScreen.prototype ={
         clave_iden = prompt('Clave única de juego');        
         socket.emit('identifier',clave_iden);
 
-     	game.state.start("online");
+     	game.state.start("ofline");
      	
-    }, 3000);
+    }, 1000);
 	}
 }

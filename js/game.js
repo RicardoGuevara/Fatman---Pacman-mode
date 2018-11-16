@@ -1,4 +1,4 @@
-var PacmanGame = function(game) {
+PacmanGame = function(game) {
   this.map = null;
   this.layer = null;
 
@@ -65,10 +65,7 @@ var PacmanGame = function(game) {
   this.isPaused = false;
   this.FRIGHTENED_MODE_TIME = 7000;
 
-  this.ORIGINAL_OVERFLOW_ERROR_ON = true;
-  this.DEBUG_ON = true;
-
-  this.KEY_COOLING_DOWN_TIME = 250;
+  this.KEY_COOLING_DOWN_TIME = 100;
   this.lastKeyPressed = 0;
 
   this.game = game;
@@ -80,18 +77,10 @@ PacmanGame.prototype = {
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.pageAlignHorizontally = true;
     this.scale.pageAlignVertically = true;
-
-    Phaser.Canvas.setImageRenderingCrisp(this.game.canvas); // full retro mode, i guess ;)
-
     this.physics.startSystem(Phaser.Physics.ARCADE);
   },
 
   preload: function() {
-    //  We need this because the assets are on Amazon S3
-    //  Remove the next 2 lines if running locally
-    //this.load.baseURL = 'http://files.phaser.io.s3.amazonaws.com/codingtips/issue005/';
-    //this.load.crossOrigin = 'anonymous';
-
     this.load.image('dot', 'assets/dot.png');
     this.load.image("pill", "assets/pill16.png");
     this.load.image('tiles', 'assets/pacman-tiles.png');
@@ -99,7 +88,6 @@ PacmanGame.prototype = {
     this.load.spritesheet("ghosts", "assets/ghosts32.png", 32, 32);
     this.load.tilemap('map', 'assets/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
 
-    //  Needless to say, the beast was stoned... and the graphics are Namco (C)opyrighted
   },
 
   create: function() {
@@ -115,36 +103,16 @@ PacmanGame.prototype = {
     this.pills = this.add.physicsGroup();
     this.numPills = this.map.createFromTiles(40, this.safetile, "pill", this.layer, this.pills);
 
-    //  The dots will need to be offset by 6px to put them back in the middle of the grid
     this.dots.setAll('x', 6, false, false, 1);
     this.dots.setAll('y', 6, false, false, 1);
 
-    //  Pacman should collide with everything except the safe tile
     this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
-    // Our hero
     this.pacman = new Pacman(this, "pacman");
-
-    // Score and debug texts
-    this.scoreText = game.add.text(8, 272, "Score: " + this.score, {
-      fontSize: "16px",
-      fill: "#fff"
-    });
-    this.debugText = game.add.text(375, 260, "", {
-      fontSize: "12px",
-      fill: "#fff"
-    });
-    this.overflowText = game.add.text(375, 280, "", {
-      fontSize: "12px",
-      fill: "#fff"
-    });
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.cursors["d"] = this.input.keyboard.addKey(Phaser.Keyboard.D);
     this.cursors["b"] = this.input.keyboard.addKey(Phaser.Keyboard.B);
-
-    //this.game.time.events.add(1250, this.sendExitOrder, this);
-    //this.game.time.events.add(7000, this.sendAttackOrder, this);
 
     this.changeModeTimer = this.time.time + this.TIME_MODES[this.currentMode].time;
 
@@ -233,18 +201,8 @@ PacmanGame.prototype = {
   },
 
   update: function() {
-    this.scoreText.text = "Score: " + this.score;
-    if (this.DEBUG_ON) {
-      this.debugText.text = "Debug ON";
-    } else {
-      this.debugText.text = "";
-    }
-    if (this.ORIGINAL_OVERFLOW_ERROR_ON) {
-      this.overflowText.text = "Overflow ON";
-    } else {
-      this.overflowText.text = "";
-    }
-
+    //this.scoreText.text = "Score: " + this.score;
+    
     if (!this.pacman.isDead) {
       for (var i = 0; i < this.ghosts.length; i++) {
         if (this.ghosts[i].mode !== this.ghosts[i].RETURNING_HOME) {
@@ -270,7 +228,6 @@ PacmanGame.prototype = {
         } else {
           this.sendScatterOrder();
         }
-        console.log("new mode:", this.TIME_MODES[this.currentMode].mode, this.TIME_MODES[this.currentMode].time);
       }
       if (this.isPaused && this.changeModeTimer < this.time.time) {
         this.changeModeTimer = this.time.time + this.remainingTime;
@@ -280,7 +237,6 @@ PacmanGame.prototype = {
         } else {
           this.sendScatterOrder();
         }
-        console.log("new mode:", this.TIME_MODES[this.currentMode].mode, this.TIME_MODES[this.currentMode].time);
       }
     }
 
@@ -300,7 +256,6 @@ PacmanGame.prototype = {
     }
     this.changeModeTimer = this.time.time + this.FRIGHTENED_MODE_TIME;
     this.isPaused = true;
-    console.log(this.remainingTime);
   },
 
   isSpecialTile: function(tile) {
@@ -364,4 +319,4 @@ PacmanGame.prototype = {
   }
 };
 
-game.state.add('Game', PacmanGame, true);
+game.state.add('Game', PacmanGame);

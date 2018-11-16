@@ -50,3 +50,7 @@ function getMessageComponent(message_text)
 
 	return li;
 }
+
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
