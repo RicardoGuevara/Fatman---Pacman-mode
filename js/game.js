@@ -194,7 +194,7 @@ PacmanGame.prototype = {
     //this.stopGhosts();
     setTimeout(function () {
 
-        alert("Haz fallado, fatman ha muerto de gordura :(");
+        swal("Haz fallado, fatman ha muerto de gordura :(");
         //clave_iden = prompt('Nombre de la sala');        
         socket.emit('identifier',clave_iden);
 
