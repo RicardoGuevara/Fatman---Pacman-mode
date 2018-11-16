@@ -25,6 +25,8 @@ function getMessageComponent(message_text)
 	*/
 
 	//small and paragraph for date
+	
+
 	let small = document.createElement("small")     
 	small.appendChild(document.createTextNode(formatAMPM(new Date())))
 	let p_small = document.createElement("p")
@@ -47,7 +49,13 @@ function getMessageComponent(message_text)
 	let li = document.createElement("li")
 	li.appendChild(extern_div);
 	li.style.width='100%';
+	
+  	
+  
 
+	
+	
+	
 	return li;
 }
 

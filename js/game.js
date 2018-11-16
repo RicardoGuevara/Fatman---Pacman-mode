@@ -212,7 +212,7 @@ PacmanGame.prototype = {
   },
 
   update: function() {
-    //this.scoreText.text = "Score: " + this.score;
+    document.getElementById("score").innerHTML = "Score: " + this.score;
     
     if (!this.pacman.isDead) {
       for (var i = 0; i < this.ghosts.length; i++) {

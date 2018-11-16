@@ -1,6 +1,6 @@
 socket.on('game',(game_data)=>{
     online_cursors = game_data;
-    
+    console.log(online_cursors);
 });
 
 online_game = function(game) {
