@@ -15,9 +15,13 @@ message_tb.addEventListener('keydown',(evt)=>{
 });
 
 function enviar(){
-	socket.emit('chat',{
-		message: 	message_tb.value,
-	});
+	if (message_tb.value != "")
+	{
+		socket.emit('chat',{
+			message: 	message_tb.value,
+		});
+		message_tb.value = "";	
+	}
 }
 
 //message_listening
