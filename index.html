@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>FatMan32</title>
+	
+	<link rel="shortcut icon" href="img/logo.ico" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/styles.css">
+	
+	<!--server connection scripts-->
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<!--END _ server connection scripts-->
+
+	<!-- phaser connection scripts -->	
+	<script src="../../bower_components/phaser/build/phaser.min.js"></script>
+	<script>window.Phaser || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.4/phaser.min.js"><\/script>')</script>
+	<!-- END _ phaser connection scripts -->	
+
+
+	<!--loaders-->
+	<script type="text/javascript" src="js/auxiliar_functions.js"></script>
+	<!--END _ loaders-->
+
+</head>
+<body>
+	<section class="container">
+		<nav class="navbar navbar-dark bg-dark">
+		  <a href="#" class="navbar-brand">
+		  	<img src="img/logo.png" alt="">
+		  	FatMan32
+		  </a>
+		</nav>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8" id="kill_me_pls">
+						
+					</div>
+					
+						
+						<div id="chat_div" class="col-md-4">
+							 <ul></ul>
+
+							<div class="msj-rta macro">                        
+			                    <div class="text">
+			                        <input class="mytext" id ="chat_message_tb"placeholder="Escribe un mensaje"/>
+			                    </div> 
+								<input type="button" id="chat_send_btn" value="Send">
+		               		 </div>
+							
+							
+							
+						</div>
+					
+				</div>
+			</div>
+			<footer class="bg-dark">
+				<h3>footer</h3>
+			</footer>
+	</section>
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/	popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+	<!-- FatMan Logics -->
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/chat_client.js"></script>
+	<script type="text/javascript" src="js/SplashScreen.js"></script>
+	<script type="text/javascript" src="js/online_game.js"></script><script src="../../plugins/phaser-debug.min.js"></script>
+	<script src="../../plugins/phlog.js"></script>
+	<script src="js/pacman.js"></script>
+	<script src="js/ghost.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
+	<!-- END _ FatMan Logics -->
+
+</body>
+</html>
